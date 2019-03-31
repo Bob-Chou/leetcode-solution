@@ -2,5 +2,5 @@
 ## Review log
 + 03/28/2019 AC but not the optimal.
 
-## Thinks about it
+## Insight
 Binary search twice.

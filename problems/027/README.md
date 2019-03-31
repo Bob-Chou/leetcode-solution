@@ -2,5 +2,5 @@
 ## Review log
 + 03/27/2019 AC.
 
-## Thinks about it
+## Insight
 Analog to quick sorting process.
