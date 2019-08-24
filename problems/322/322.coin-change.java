@@ -1,8 +1,5 @@
 class Solution {
     public int coinChange(int[] coins, int amount) {
-<<<<<<< HEAD
-        
-=======
         if (amount == 0) return 0;
         if (coins.length < 1) return -1;
         int[] helper = new int[amount+1];
@@ -21,6 +18,5 @@ class Solution {
             }
         }
         return helper[amount];
->>>>>>> master
     }
 }
