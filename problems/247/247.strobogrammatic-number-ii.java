@@ -1,41 +1,33 @@
 class Solution {
-    private static final Set<String> one = new HashSet<>(Arrays.asList("0", "1", "8"));
-    private static final Set<String> two = new HashSet<>(Arrays.asList("11","69","88","96"));
+    private static final char[] middle = new char[] {'0', '1', '8'};
+    private static final char[] left = new char[] {'0', '1','6', '8', '9'};
+    private static final char[] right = new char[] {'0', '1','9', '8', '6'};
     public List<String> findStrobogrammatic(int n) {
-        if (n == 1)
-            return new ArrayList<>(one);
-        if (n==2)
-            return new ArrayList<>(two);
-        Set<String> oneCache = new OrderedHashSet<>(two);
-        Set<String> twoCache = new OrderedHashSet<>(one);
-        two.add("00");
-        StringBuilder helper = new StringBuilder();
-        for (int i = 3; i <= n; ++i) {
-            Set<String> tmp = new OrderedHashSet<>();
-            for (String s1 : twoCache) {
-                for (String s2 : two) {
-                    for (int j = 0; j <= (i-2)/2; ++j) {
-                        helper.setLength(0);
-                        int p = 0;
-                        if (j==0 && s2.charAt(0)=='0')
-                            continue;
-                        for (int k = 0; k < i; ++k) {
-                            if (k==j)
-                                helper.append(s2.charAt(0));
-                            else if (k==i-j-1)
-                                helper.append(s2.charAt(1));
-                            else
-                                helper.append(s1.charAt(p++));
-                        }
-                        tmp.add(helper.toString());
-                    }
-                }
+        List<String> ans = new ArrayList<>();
+        char[] number = new char[n/2*2+1];
+        if (n % 2 == 1) {
+            for (int i = 0; i < middle.length; ++i) {
+                number[n/2] = middle[i];
+                dfs(n, number, 1, ans);
             }
-            twoCache = oneCache;
-            oneCache = tmp;
+        } else {
+            dfs(n, number, 1, ans);
         }
+        return ans;
+    }
 
-        List<String> ans = new ArrayList<>(oneCache);
-        Collections.sort(ans, (a, b) -> a.compareTo(b));
+    private static void dfs(int n, char[] number, int start, List<String> ans) {
+        if (start > n/2) {
+            ans.add(String.valueOf(number).trim());
+            return;
+        }
+        for (int i = 0; i < left.length; ++i) {
+            // '0' cannot be used as start of the number
+            if (i == 0 && start == n/2)
+                continue;
+            number[n/2-start] = left[i];
+            number[(n-1)/2+start] = right[i];
+            dfs(n, number, start+1, ans);
+        }
     }
 }
