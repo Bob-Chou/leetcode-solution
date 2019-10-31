@@ -35,5 +35,7 @@ class Solution {
             cells[cells.length-i-1] = next & 1;
             next >>= 1;
         }
+
+        return cells;
     }
 }
